@@ -35,6 +35,7 @@ namespace PracticeFitnessBL.Controller.Tests
             var height = 190;
             var gender = "man";
             var controller = new UserController(userName);
+
             //Act
             controller.SetNewUserData(gender, birthDate, weight, height);
             var controller2 = new UserController(userName);
