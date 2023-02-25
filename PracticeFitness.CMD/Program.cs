@@ -2,7 +2,8 @@
 using PracticeFitnessBL.Controller;
 using PracticeFitnessBL.Model;
 using System;
-
+using System.Globalization;
+using System.Resources;
 
 namespace PracticeFitness.CMD
 {
@@ -10,9 +11,13 @@ namespace PracticeFitness.CMD
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Вас привествует приложение CodeBlogFitness");
 
-            Console.WriteLine("Введите имя пользователя");
+            var culture = CultureInfo.CreateSpecificCulture("ru-Ru");
+            var resourceManager = new ResourceManager("PracticeFitness.CMD.Languages.Messages", typeof(Program).Assembly);
+
+            Console.WriteLine(resourceManager.GetString("Hello", culture));
+
+            Console.WriteLine(resourceManager.GetString("InputUserName", culture));
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
@@ -21,11 +26,11 @@ namespace PracticeFitness.CMD
 
             if (userController.IsNewUser)
             {
-                Console.Write("Введите пол: ");
+                Console.Write(resourceManager.GetString("SetGender", culture));
                 var gender = Console.ReadLine();
                 var birthDate = ParseBirthDate();
-                var weight = ParseDouble("Вес");
-                var height = ParseDouble("Рост");
+                var weight = ParseDouble(resourceManager.GetString("SetWeight", culture));
+                var height = ParseDouble(resourceManager.GetString("SetHeight", culture));
 
                 userController.SetNewUserData(gender, birthDate, weight, height);
             }
